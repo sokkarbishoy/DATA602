@@ -1,0 +1,66 @@
+---
+title: "Week 2 Assignment"
+author: "Bishoy Sokkar"
+date: "2024-02-10"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 1. Build Table
+
+In this assignment, we will recall tables from the SQL database into R. The data is stored in the database server: cunydata607sql.mysql.database.azure.com. The two tables created were Friends and Ratings. Friends have names, ages, occupancy, and favorite genres. Ratings contain the ratings recorded for each movie.
+
+```{r cars}
+# install packages needed
+library(DBI)
+library(odbc)
+library(RSQLite)
+library(RMySQL)
+library(dplyr)
+
+```
+
+## 2. Store data in SQL database
+
+The tables were made in EXCEL and uploaded through the "Table Data Import Wizard" Available on MySQL Workbench.
+
+## 3. Transfer data from SQL database to R dataframe
+
+In the code below, we will establish a connection with MySQL server with the stored data, and view insights from the tables.
+
+```{r}
+con <- dbConnect(MySQL(), user='bishoy.sokkar60', password='<bishoy.sokkar607>', dbname='bishoy.sokkar60', host='cunydata607sql.mysql.database.azure.com')
+```
+
+To view the tables in the database:
+
+```{r}
+dbListTables(con)
+```
+
+To learn more about the table variables in the data base:
+
+```{r}
+dbListFields(con, "friends") 
+dbListFields(con, "ratings")
+```
+
+To retrieve tables from MySQL server, we use the following function:
+
+```{r}
+#to create tables in R with the data
+Friends_data = dbGetQuery(con, "SELECT * FROM friends ")
+Ratings_data = dbGetQuery(con, "SELECT * FROM ratings")
+# to glimpse to confirm all information transfered correctly.
+glimpse(Friends_data)
+glimpse(Ratings_data)
+```
+
+## 4. Missing data strategy
+
+When uploading the tables into the SQL database, I selected NN (Not Null) which constrains the column from containing null values.
