@@ -1,0 +1,99 @@
+---
+title: "Project 1 "
+author: "Bishoy Sokkar"
+date: "2024-02-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Working with Ratings text file
+
+Text file was uploaded to personal Github account
+
+```{r}
+#load necessary packages
+library(tidyverse)
+library(stringr)
+library(readr)
+
+#Read text file, uploaded on personal Github
+
+ELOratings1 = read.csv("https://raw.githubusercontent.com/sokkarbishoy/DATA607/main/tournamentinfo.txt")
+
+ELOratings2 <- read_lines(url("https://raw.githubusercontent.com/sokkarbishoy/DATA607/main/tournamentinfo.txt"))
+ELOratings3 <- str_squish(ELOratings2)
+head(ELOratings3, n=15)
+```
+
+**Extracting the names of the players using REGEX**
+
+```{r}
+elorating4 <- str_view(ELOratings3, "\\s\\|\\s[A-Z].*\\s\\|\\d")
+head(elorating4, n=40)
+elorating4 <- str_extract(elorating4,"\\|\\s[^0-9]+\\s\\|" )
+head(elorating4)
+Player <- str_extract(elorating4, "\\s.*\\s")
+Player <- str_trim(Player)
+print(Player)
+```
+
+**Extracting States using REGEX**
+
+```{r}
+
+
+
+State <- str_view(ELOratings3, "^[A-Z].\\s")
+head(State)
+State <- str_extract(State, "[A-Z][A-Z]\\s")
+print(State)
+
+
+
+```
+
+**Extracting total points**
+
+```{r}
+Total_points <- str_view(ELOratings3, "\\s\\|\\s[A-Z].*\\s\\|\\d.\\d")
+Total_points <- str_extract(Total_points, "\\d.\\d")
+print(Total_points)
+
+
+
+```
+
+**Extracting Pre Rating**
+
+```{r}
+Pre_rating <- str_view(ELOratings3, "R:\\s.*\\-")
+Pre_rating <- str_extract(Pre_rating, ":\\s.*\\-")
+Pre_rating <- str_extract(Pre_rating, "\\d.*\\d")
+Pre_rating <- str_extract(Pre_rating, "\\d{3,4}")
+print(Pre_rating) 
+```
+
+**Extracting players opponent average pre-rating: Still having difficulties understanding the best way to use the joint function.**
+
+```{r}player's'}
+
+```
+
+build a data frame, with the extracted data, except the opponents pre rating.
+
+```{r}
+RatingsFinal <- data.frame( Player,
+                            State,
+                            Total_points,
+                            Pre_rating)
+RatingsFinal
+```
+
+Converting into a CSV
+
+```{r}
+write.csv(RatingsFinal, file = "ELO_Ratings.csv", row.names = FALSE)
+```
