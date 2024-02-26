@@ -1,0 +1,96 @@
+---
+title: "Week 5 Assignment"
+author: "Bishoy Sokkar"
+date: "2024-02-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+First we pull the data from personal Github, data was made with excel and uploaded to github as a CSV.
+
+```{r}
+Data <- read.csv("https://raw.githubusercontent.com/sokkarbishoy/DATA607/main/Flights%20wk5.csv")
+
+print(Data)
+```
+
+Install packages
+
+in the code below, I installed the packages tidyverse which includes tidyr amd dplyr packages. I started by
+
+```{r}
+library(tidyverse)
+library(tidyr)
+library(dplyr)
+
+#code to transform the states columns into a new variale called destination 
+
+Data2 <-Data %>%
+  pivot_longer( cols = c('Los.Angeles', 'Phoenix', 'San.Diego', 'San.Francisco', 'Seattle'), names_to = "Destination", values_to = "Frequency")
+
+head(Data2)
+
+```
+
+In the code below I rename the missing columns names with Airline and Status and remove the "." in the states with a space.
+
+```{r}
+
+colnames(Data2)[colnames(Data2) %in% c("X", "X.1")] <- c("Airline", "Status")
+head(Data2)
+
+```
+
+```{r}
+
+```
+
+To remove the . between states I used the following code.
+
+```{r}
+Data2$Destination <- gsub("\\.", " ", Data2$Destination)
+
+head(Data2)
+```
+
+```{r}
+str(Data2)
+```
+
+```{r}
+summary(Data2)
+```
+
+```{r}
+
+average_flights <- mean(Data2$Frequency)
+average_flights
+```
+
+\
+We can find the create a ggplot to highlight the destinations and how often they could be delayed.
+
+```{r}
+ggplot(Data2, aes(x= Destination, y= Frequency, fill = Status))+
+  geom_bar(stat = "identity")+
+  labs(title = "Flights by Destination and Status",
+       x = "Destination",
+       y = "Flights",
+       fill = "Status")
+```
+
+To compare the number of flights of both Airlines mentioned and the number of delayed can be presented using the next plot.
+
+It appears that AM west have higher number of flights and more thus more delayed flighthass.
+
+```{r}
+ggplot(Data2, aes(x= Airline, y = Frequency, fill = Status))+
+  geom_bar(stat = "identity")
+```
