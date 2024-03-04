@@ -1,0 +1,263 @@
+---
+title: "Project 2"
+author: "Bishoy Sokkar & Natalie Kalukeerthie"
+date: "2024-02-26"
+output: html_document
+---
+
+### Dataset 1 - [Bureau of Labor Statistics - CPI Report for Jan2024](https://www.bls.gov/cpi/tables/supplemental-files/home.htm)
+
+First: Tidying the data.
+
+to get started, we load the tidyverse package, which includes all the packages we need for the assignment and load the first dataset: CPI data for January 2024.
+
+```{r}
+library(tidyverse)
+
+
+CPI_Jan <- read.csv("https://raw.githubusercontent.com/sokkarbishoy/DATA607/main/news-release-table1-202401.csv")
+head(CPI_Jan)
+```
+
+### Tidying the data
+
+We start tidying the data removing the first two rows, last three rows and empty rows;
+
+```{r}
+CPI_Jan <- CPI_Jan[-c(1:5, 16, 25, 45:49), ]
+
+tail(CPI_Jan)
+```
+
+Next we change the columns names to be easier to identify
+
+```{r}
+new_columns <- c("Indent_Level",
+                 "Expenditure_category",
+                 "Relative_importance_Dec_2023",
+                 "Jan_2023_Unadjusted_indexes", 
+                 "Dec_2023_Unadjusted_indexes", 
+                 "Jan_2024_Unadjusted_indexes",
+                 "Jan_2023_Jan_2024_Unadjusted_percent_change",
+                 "Dec_2023_Jan_2024_Unadjusted_percent_change", 
+                 "Oct_2023_Nov_2023_Seasonally_adjusted_percent_change",
+                 "Nov_2023_Dec_2023_Seasonally_adjusted_percent_change", 
+                 "Dec_2023_Jan_2024_Seasonally_adjusted_percent_change")
+
+colnames(CPI_Jan) <- new_columns
+ 
+#change the type into INT
+CPI_Jan$Indent_Level <- as.integer(CPI_Jan$Indent_Level)
+head(CPI_Jan)
+
+```
+
+Finally we change the type of each columns to INT and Numeric
+
+```{r}
+CPI_Jan <- transform(CPI_Jan, 
+          Indent_Level = as.integer(Indent_Level),
+          Relative_importance_Dec_2023 = as.numeric(Relative_importance_Dec_2023),
+          Jan_2023_Unadjusted_indexes = as.numeric(Jan_2023_Unadjusted_indexes),
+          Dec_2023_Unadjusted_indexes = as.numeric(Dec_2023_Unadjusted_indexes),
+          Jan_2024_Unadjusted_indexes = as.numeric(Jan_2024_Unadjusted_indexes),
+          Jan_2023_Jan_2024_Unadjusted_percent_change = as.numeric(Jan_2023_Jan_2024_Unadjusted_percent_change),
+          Dec_2023_Jan_2024_Unadjusted_percent_change = as.numeric(Dec_2023_Jan_2024_Unadjusted_percent_change),
+          Oct_2023_Nov_2023_Seasonally_adjusted_percent_change = as.numeric(Oct_2023_Nov_2023_Seasonally_adjusted_percent_change),
+          Nov_2023_Dec_2023_Seasonally_adjusted_percent_change = as.numeric(Nov_2023_Dec_2023_Seasonally_adjusted_percent_change),
+          Dec_2023_Jan_2024_Seasonally_adjusted_percent_change = as.numeric(Dec_2023_Jan_2024_Seasonally_adjusted_percent_change))
+```
+
+### Analysis
+
+in the next lines, we will answer the question: which categories saw the biggest from December to Jan. Amother part of tidying the data will be using the filter function to analyse the subgroups only which will give us accurate data.
+
+Data shows that commodities expenditures such as Cereals, bakery products, as well as Energy and gasoline saw the least change.\
+
+```{r}
+CPI_Jan %>%
+  filter(Indent_Level == 3) %>%
+  arrange(Dec_2023_Jan_2024_Seasonally_adjusted_percent_change)
+```
+
+To view expenditures that saw the most change we can use the following code.
+
+```{r}
+CPI_Jan %>%
+  filter(Indent_Level == 3) %>%
+  arrange(desc(Dec_2023_Jan_2024_Seasonally_adjusted_percent_change))
+```
+
+Below we analyze the major categories (indent level = 3);
+
+```{r}
+CPI_Jan %>% 
+  filter(Indent_Level == 3) %>%
+  arrange(desc(Jan_2023_Jan_2024_Unadjusted_percent_change))
+```
+
+###Conclusion: CPI data contains many more insights that I can be analyzed. here are the questions we answered in the analysis above:
+
+-   Which category saw the least change from Dec 2023 - Jan 2024? **Ans**: Fuel oil, Used cars and trucks, and Motor fuel.
+-   Which category saw the biggest change from Dec 2023 - Jan 2024? **Ans**: Utility Gas services, electricity, and transportation services.
+-   Which category saw the biggest change from Jan 2023 - Jan 2024? **Ans**: Transportation, Tobacco and smoking products, and Shelter.
+
+Dataset: ["Bureau of Labor Statistics - CPI Report for Jan2024"](https://www.bls.gov/cpi/tables/supplemental-files/home.htm)\
+First: Tidying the data.
+
+### Dataset 2 - US Census: Population growth 2015 - 2020 of Southern States by Natalie Kalukeerthie.
+
+```{r}
+
+population_data <- read.csv('https://raw.githubusercontent.com/nk014914/Data-607/main/Population_data.csv')
+
+population_data
+
+
+```
+
+```{r}
+
+#cleaning the data
+
+#Removing blank rows and renaming the columns to shorten for just the year
+population_data <- population_data %>% 
+  drop_na() %>%
+  rename(state = Name, x2015 = X2015.Population, x2016 = X2016.Population, x2017 = X2017.Population, x2018 = X2018.Population, x2019 = X2019.Population, x2020 = X2020.Population)
+
+#remove unused columns
+population_data_subset <- subset(population_data, select= -c(FIPS,Abbreviations))
+
+#transforming data - putting years into columns to make long data
+population_data_subset <- population_data_subset %>% 
+  gather(key = 'year', value = 'population', 2:7)
+
+population_data_subset
+
+#remove x's in year column
+population_data_final <- population_data_subset %>%
+  mutate(across(c('year'), substr, 2, nchar(year)))
+
+population_data_final
+
+```
+
+### Analysis
+
+We will create a few visuals in order to dig into the raw data a bit deeper, some things I will be looking for are:
+
+1.  Descriptive statistics of the data
+2.  Compare yearly growth between the states
+3.  See which year had the largest population growth
+
+```{r}
+#First I need to make data as a numeric vector because my y axis was not in increasing order
+transform(population_data_final, population = as.numeric(population))
+
+#checking if column is now numeric
+class(population_data_final$population)
+
+```
+
+```{r}
+#Determine the summary statistics on population per year of the four states
+population_summary <- population_data_final %>%
+  group_by(year) %>%
+  summarize(mean = mean(population), median = median(population), min = min(population), max = max(population), na.rm = T) %>%
+  arrange(mean)
+
+population_summary 
+
+```
+
+```{r}
+#visualize growth of population per state
+ggplot(data=population_data_final, aes(x=year, y= population, group = state)) +
+  geom_line(aes(color=state))+
+  geom_point(aes(color=state))
+```
+
+Viewing the yearly state populations plotted, we can see a few things: - Georgia has the largest overall population every year, while South Carolina has the smallest (by a large difference in comparison to the other states.)
+
+-   Georgia and North Carolina are closer in yearly population than the other two states as their lines are very close to one another.
+
+-   Virginia seems to have the smallest yearly population growth as their line has the least amount of steepness in comparison to Virginia, North Carolina and Georgia.
+
+```{r}
+#Determining which year has the largest population growth
+
+#sum of population per year
+sum2015 = sum( population_data_final$population [ population_data_final$year==2015] )
+sum2016 = sum( population_data_final$population [ population_data_final$year==2016] )
+sum2017 = sum( population_data_final$population [ population_data_final$year==2017] )
+sum2018 = sum( population_data_final$population [ population_data_final$year==2018] )
+sum2019 = sum( population_data_final$population [ population_data_final$year==2019] )
+sum2020 = sum( population_data_final$population [ population_data_final$year==2020] )
+
+population_total = c(sum2015,sum2016,sum2017,sum2018,sum2019,sum2020)
+
+#add column with years and create dataframe
+year = c('2015','2016','2017','2018','2019','2020')
+sum_population = as.data.frame(year)
+
+sum_population$population_total <- population_total
+
+sum_population
+
+#calculate percent change per year over year, we will use th collapse package
+library(collapse)
+
+sum_population |> fmutate(growth = fgrowth(population_total))
+```
+
+### Conclusion
+
+Based on the analysis, we can see the largest population growth of the four states combined is between 2018 o 2019 with a growth of around 1.29. The smallest growth was from 2015 to 2016 at 1.04. An interesting find I saw was that the growth percentage was steadily increasing each year until 2019-2020 we it dropped to 1.13 the second lowest population growth of all 6 years.
+
+—— Please Help with below if possible, below is a draft and will continued and submitted later ———–——————————————————————————————————————————————
+
+Dataset 3 - [Nobel Prize Winners.](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/HYRJDX)
+
+First we load the data from the stored location on my Github.
+
+```{r}
+nobel <- read.csv("https://raw.githubusercontent.com/sokkarbishoy/DATA607/main/complete(1).csv")
+```
+
+### Tidying the data
+
+**Questions to answer with the analysis:\
+Which field has received the largest prize amount? Which field has received the lowest?\
+What proportion of the awards are given to women vs men? How has this changed over time?**
+
+Looking at the data, there were some empty values in the Gender category. Upon closer look it appears to be organizations. So in the code below we will replace empty values in the gender variable to Organization, And then compare the proportion of awards given to Males, Females, and organizations.
+
+```{r}
+nobel$gender[is.na(nobel$gender)] <- "Organization"
+```
+
+###Analysis
+
+```{r}
+  
+  
+```
+
+```{r}
+
+gender_freq <- table(nobel$gender)
+
+gender_data <- data.frame(gender = names(gender_freq), frequency = as.numeric(gender_freq))
+
+ggplot(gender_data, aes(x = gender, y = frequency, fill = gender)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Frequency of Gender/Organization in Nobel Dataset",
+       x = "Gender/Organization", y = "Frequency") +
+  scale_fill_manual(values = c("male" = "lightblue", "female" = "lightpink", "organization" = "lightgreen"))
+```
+
+As of now I am working on my last dataset and will be finished before the lecture. \
+My work will be in tidying and removing the NA values with actual values to answer the two questions above. Please advice of the best way if possible. \
+\
+
+ 
