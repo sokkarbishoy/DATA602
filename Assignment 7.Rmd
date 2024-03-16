@@ -1,0 +1,81 @@
+---
+title: "Assignment 7"
+author: "Bishoy Sokkar"
+date: "2024-03-15"
+output: html_document
+---
+
+##Intro
+
+In the following codes we will create a table of books in HTML, XML, and JSON, with a goal of mind to pull and create dataframes in R.
+Loading out packages are in the next code:
+
+
+```{r}
+library(tidyverse)
+library(rvest)
+library(XML)
+library(jsonlite)
+```
+
+## HTML
+
+First I created the HTML table.
+```{r}
+table_HTML <- read_html("https://raw.githubusercontent.com/sokkarbishoy/DATA607/main/Assignment%207%20HTML%20table")
+```
+
+Second we load into a dataframe in R using the following code. 
+
+```{r}
+Books_table_HTML <- table_HTML %>% 
+  html_node("table") %>%
+  html_table(header = TRUE, fill = TRUE)
+Books_table_HTML
+```
+
+##XML 
+same as we did in the first part, we store out XML code in Github and read it on R
+```{r}
+library(xml2)
+library(xmlconvert)
+url <- "https://raw.githubusercontent.com/sokkarbishoy/DATA607/main/Books%20.XML"
+
+xmltable <- (read_xml(url))
+xmltable
+
+xml_data <- xmlParse(xmltable)
+```
+
+```{r}
+titles <- xpathSApply(xml_data, "//book/title", xmlValue)
+authors <- xpathSApply(xml_data, "//book/authors", xmlValue)
+years <- xpathSApply(xml_data, "//book/publication_year", xmlValue)
+summaries <- xpathSApply(xml_data, "//book/summary", xmlValue)
+main_themes <- xpathSApply(xml_data, "//book/main_themes", xmlValue)
+genres <- xpathSApply(xml_data, "//book/genre", xmlValue)
+Books_data_XML <- data.frame(
+  Title = titles,
+  Authors = authors,
+  Publication_Year = years,
+  Summary = summaries,
+  Genre = genres,
+  Main_Themes = main_themes)
+
+print(Books_data_XML)
+
+```
+
+
+##JSON
+
+```{r}
+Json_file = "https://raw.githubusercontent.com/sokkarbishoy/DATA607/main/books.JSON"
+json_raw <- fromJSON(Json_file)
+Books_table_json <- as.data.frame(json_raw, col.names = c(""))
+Books_table_json
+```
+
+
+##Conclusion
+In this assignment, I learned how to pull data from HTML, XML, and JSON code formate into R. I am sure this was simple as I was the one who created the table but over the next weeks I will be practicing web scrapping more and would apply what I learned from this assignment. 
