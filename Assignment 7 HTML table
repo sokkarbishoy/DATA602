@@ -1,0 +1,69 @@
+Certainly! Here's the HTML code for the table:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History Books</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h2>History Books</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Authors</th>
+                <th>Publication Year</th>
+                <th>Summary</th>
+                <th>Genre</th>
+                <th>Main Themes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Guns, Germs, and Steel</td>
+                <td>Jared Diamond</td>
+                <td>1997</td>
+                <td>Explores the reasons for the dominance of Eurasian civilizations throughout history.</td>
+                <td>Non-fiction</td>
+                <td>Geography, Anthropology, Sociology</td>
+            </tr>
+            <tr>
+                <td>A People's History of the United States</td>
+                <td>Howard Zinn</td>
+                <td>1980</td>
+                <td>Provides a different perspective on American history, focusing on the experiences of ordinary people rather than political elites.</td>
+                <td>Non-fiction</td>
+                <td>Social Justice, Labor Movements, Civil Rights</td>
+            </tr>
+            <tr>
+                <td>The Rise and Fall of the Third Reich</td>
+                <td>William L. Shirer, Ron Rosenbaum</td>
+                <td>1960</td>
+                <td>Chronicles the history of Nazi Germany, from its rise to power to its defeat in World War II, written by a journalist who witnessed many of the events firsthand.</td>
+                <td>Non-fiction</td>
+                <td>World War II, Totalitarianism, Rise and Fall of Empires</td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
+```
+
+You can copy and paste this code into an HTML file and open it in a web browser to see the table.
