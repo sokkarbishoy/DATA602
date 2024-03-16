@@ -1,0 +1,26 @@
+<books>
+    <book>
+        <title>Guns, Germs, and Steel</title>
+        <authors>Jared Diamond</authors>
+        <publication_year>1997</publication_year>
+        <summary>Explores the reasons for the dominance of Eurasian civilizations throughout history.</summary>
+        <genre>Non-fiction</genre>
+        <main_themes>Geography, Anthropology, Sociology</main_themes>
+    </book>
+    <book>
+        <title>A People's History of the United States</title>
+        <authors>Howard Zinn</authors>
+        <publication_year>1980</publication_year>
+        <summary>Provides a different perspective on American history, focusing on the experiences of ordinary people rather than political elites.</summary>
+        <genre>Non-fiction</genre>
+        <main_themes>Social Justice, Labor Movements, Civil Rights</main_themes>
+    </book>
+    <book>
+        <title>The Rise and Fall of the Third Reich</title>
+        <authors>William L. Shirer, Ron Rosenbaum</authors>
+        <publication_year>1960</publication_year>
+        <summary>Chronicles the history of Nazi Germany, from its rise to power to its defeat in World War II, written by a journalist who witnessed many of the events firsthand.</summary>
+        <genre>Non-fiction</genre>
+        <main_themes>World War II, Totalitarianism, Rise and Fall of Empires</main_themes>
+    </book>
+</books>
