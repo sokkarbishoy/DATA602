@@ -1,0 +1,57 @@
+---
+title: "Assignment 9"
+author: "Bishoy Sokkar"
+date: "2024-03-23"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+First we load all necessary packages 
+```{r}
+library(httr2)
+library(httr)
+library(jsonlite)
+```
+
+We assign the API key we created on NYT developer. 
+```{r}
+api_nyt <- "VTT0uyVEoyqLOIaRggsdCixwbVl8AzSO"
+```
+
+We specify the endpoint used from the top stories API, es pacifically articles in the real estate section. 
+
+```{r}
+realestate_endpoint <- "https://api.nytimes.com/svc/topstories/v2/realestate.json?api-key=VTT0uyVEoyqLOIaRggsdCixwbVl8AzSO"
+```
+
+Next we will use GET function to make a request and transforme the data into raw data object 
+```{r}
+url <- paste0(realestate_endpoint) 
+Raw_data <- GET(url)
+```
+
+```{r}
+data <- fromJSON(content(Raw_data, "text"))
+
+```
+```{r}
+articles <- data$results
+
+```
+From the above we can work into setting the parameters of the dataframe and selecting the variables we need to view. 
+
+we can use the following code to see how many columns the API returned and keep the variables we need. 
+```{r}
+colnames(articles)
+```
+From the above we want to keep Section, Title, abstract and URL. We can do this using the fillowing code. 
+
+```{r}
+realestate_articles_df <- subset(articles, select = c(section, title, abstract, url))
+
+rmarkdown::paged_table(realestate_articles_df)
+```
+
+
+
