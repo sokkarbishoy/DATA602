@@ -1,0 +1,38 @@
+---
+title: "Discussion 4 -  Recommendation Algorithms"
+author: "Bishoy Sokkar"
+date: "2024-04-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Recommendation Algorithms 
+
+**LinkedIn "People you may know"**
+
+In this R Markdown document, we will take a look through LinkedIn recommendation algorithms. The article: ["The Science Behind LinkedIn's Recommendations, AI Algorithms at Work"](https://www.linkedin.com/pulse/linkedin-you-science-behind-linkedins-recommendations-najit-khan) by Najit Khan explains how LinkedIn algorithms work.
+
+1.  Scenario Design analysis
+
+-   Who are your target users?
+
+    **LinkedIn target users are mainly working professionals, job seekers, and recruiters.**
+
+-   What are their key goals?
+
+    **The key goal of LinkedIn is to facilitate a professional platform for networking, career development, knowledge sharing, and much more business-related activities.**
+
+-   How can you help them accomplish those goals?
+
+    **As a current user, I believe the LinkedIn search engine for jobs can be improved in relevance to the customer profile and experience. This could be due to algorithms' inability to understand user's intent or context effectively.**
+
+2.   Reverse Engineering LinkedIn site.
+
+-   **LinkedIn uses AI algorithms and machine learning to understand your profile, connections, and how you engage with the platform. Then, it gives you personalized suggestions to help you connect with people and find opportunities that match your professional interests. For example, it might recommend connections based on your industry, job title, or mutual connections, making it easier for you to grow your network and explore new career paths or collaborations. The platform also checks out your profile and who you're connected with to suggest which skills to endorse. These endorsements are handy for showing off what you're good at and boosting your credibility among your professional contacts.**
+
+3.  Include specific recommendations about how to improve the site's recommendation capabilities:
+
+-   **LinkedIn could use the feedback provided by users looking for jobs and present more relevant information perhaps based on the Saved jobs you can look at what the user is looking for and present similar job postings.**
