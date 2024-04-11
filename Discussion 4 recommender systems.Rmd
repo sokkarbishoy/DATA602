@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Recommendation Algorithms 
+## Recommendation Algorithms
 
 **LinkedIn "People you may know"**
 
@@ -29,10 +29,20 @@ In this R Markdown document, we will take a look through LinkedIn recommendation
 
     **As a current user, I believe the LinkedIn search engine for jobs can be improved in relevance to the customer profile and experience. This could be due to algorithms' inability to understand user's intent or context effectively.**
 
-2.   Reverse Engineering LinkedIn site.
+2.  Reverse Engineering LinkedIn site.
 
 -   **LinkedIn uses AI algorithms and machine learning to understand your profile, connections, and how you engage with the platform. Then, it gives you personalized suggestions to help you connect with people and find opportunities that match your professional interests. For example, it might recommend connections based on your industry, job title, or mutual connections, making it easier for you to grow your network and explore new career paths or collaborations. The platform also checks out your profile and who you're connected with to suggest which skills to endorse. These endorsements are handy for showing off what you're good at and boosting your credibility among your professional contacts.**
+
+-   ***How exactly do LinkedIn algorithms work? (Newberry, 2023)***
+    1.  ***LinkedIn posts algorithms begin by classifying your post to determine if it is good content or spam. This is done by finding any violation of the [spam guidelines](https://www.linkedin.com/help/linkedin/answer/a1338787), then if the type of content is still not determined to be spam, it is then passed to a human review to find whether a violation has been determined.***
+    2.   ***The second step after the content is deemed good content, is creating relativity by comparing signals to determine how the post is valuable to your followers and other LinkedIn users. LinkedIn uses a value called meaningful engagement, which is thoughtful comments from similar fields to the user.***
+
+***It's important to note that there might be more differences from the algorithm than the "people you may know" search recommended, however, I would assume it is very similar to adding filters after filters to increase the relevancy and to satisfy their 950 million users. There was limited reliable resources on how exactly "People you may know" search recommended.***
 
 3.  Include specific recommendations about how to improve the site's recommendation capabilities:
 
 -   **LinkedIn could use the feedback provided by users looking for jobs and present more relevant information perhaps based on the Saved jobs you can look at what the user is looking for and present similar job postings.**
+
+References:
+
+Newberry, C. (2023, December 15). *How does the LinkedIn algorithm work? [2024 changes explained]*. Social Media Marketing & Management Dashboard. <https://blog.hootsuite.com/how-the-linkedin-algorithm-works-hacks/>
